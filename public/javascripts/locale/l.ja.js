@@ -68,7 +68,8 @@ l = {
         "page_not_found": "Sorry! Page not found.",
         "page_forbidden": "Sorry! You are not authorized.",
         "update_conflict": "Conflict detected. Please reload page and retry it.",
-        "illegal_sign": "Illegal sign."
+        "illegal_sign": "Illegal sign.",
+        "invalid_regexp": "invalid regular expression"
     },
     "btn": {},
     "lbl": {},

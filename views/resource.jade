@@ -32,7 +32,7 @@ mixin resource-detail-form
                     td
                         div#url-kind-div
                             each name in 'string,regex'.split(',')
-                                +radio('resource-url-kind', data, name)(id='resource-url-kind-input-'+name)
+                                +radio('url_kind', data, name)(id='resource-url-kind-input-'+name)
                                 +label('resource-url-kind-input-' + name)=l[name]
                         div.positioned#url-input-div
                             span#url-input-prefix-span

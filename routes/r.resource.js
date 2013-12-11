@@ -22,19 +22,30 @@ exports.api = {
                     res.json({err: err});
                     return;
                 }
-                Resource.findById(_id, function (old) {
-                    var resource = new Resource(data),
-                        diff = resource.diff(old);
-                    var schema = new v.resource.ResourceUpdateSchema.Newer;
-                    schema.validate(diff.newer(), function (err) {
-                        if (err) {
-                            res.json({err: err});
-                            return;
-                        }
-                        copy.fallback(old, resource);
-                        resource.update(function (resource) {
-                            res.json({
-                                resource: resource
+                new v.resource.ResourceUpdateSchema.URL().validate({
+                    "url,url_kind": {
+                        kind: data.url_kind,
+                        pattern: data.url
+                    }
+                }, function (err) {
+                    if (err) {
+                        res.json({err: err});
+                        return;
+                    }
+                    Resource.findById(_id, function (old) {
+                        var resource = new Resource(data),
+                            diff = resource.diff(old);
+                        var schema = new v.resource.ResourceUpdateSchema.Newer;
+                        schema.validate(diff.newer(), function (err) {
+                            if (err) {
+                                res.json({err: err});
+                                return;
+                            }
+                            copy.fallback(old, resource);
+                            resource.update(function (resource) {
+                                res.json({
+                                    resource: resource
+                                });
                             });
                         });
                     });

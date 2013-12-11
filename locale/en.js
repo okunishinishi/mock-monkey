@@ -2,7 +2,7 @@ var l = exports;
 
 l.app = {
     name: 'MockMonkey',
-    description:'mock api generator'
+    description: 'mock api generator'
 };
 l.admin = 'admin';
 l.signin = 'sign in';
@@ -71,3 +71,4 @@ l.err.page_not_found = 'Sorry! Page not found.';
 l.err.page_forbidden = 'Sorry! You are not authorized.';
 l.err.update_conflict = 'Conflict detected. Please reload page and retry it.';
 l.err.illegal_sign = 'Illegal sign.';
+l.err.invalid_regexp = 'invalid regular expression';

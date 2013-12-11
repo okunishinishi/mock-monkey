@@ -165,7 +165,7 @@
             var urlInputDiv = $('#url-input-div'),
                 urlLink = $('#url-input-link', urlInputDiv),
                 urlInput = $('#resource-url-input', urlInputDiv),
-                urlKindInput = section.findByName('resource-url-kind'),
+                urlKindInput = section.findByName('url_kind'),
                 urlPrefixSpan = $('#url-input-prefix-span', urlInputDiv);
 
 
