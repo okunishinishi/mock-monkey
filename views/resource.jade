@@ -30,6 +30,10 @@ mixin resource-detail-form
                 tr
                     th: +label('resource-url-input')=l.url
                     td
+                        div
+                            each name in 'regex,string'.split(',')
+                                +radio('resource-url-kind', data, name)(id='resource-url-kind-input-'+name)
+                                +label('resource-url-kind-input-' + name)=l[name]
                         div.positioned#url-input-div
                             span#url-input-prefix-span
                             +text("url", data)(id='resource-url-input', placeholder=l.placeholder.url).wide-input

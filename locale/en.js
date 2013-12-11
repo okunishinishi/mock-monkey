@@ -40,6 +40,8 @@ l.xml = 'XML';
 l.json = 'JSON';
 l.resource = 'resource';
 l.try_it = 'try it!';
+l.regex = 'RegExp';
+l.string = 'String';
 
 l.placeholder = {};
 l.placeholder.name = 'your resource name';

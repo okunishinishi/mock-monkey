@@ -40,6 +40,8 @@ l = {
     "json": "JSON",
     "resource": "resource",
     "try_it": "try it!",
+    "regex": "RegExp",
+    "string": "String",
     "placeholder": {
         "name": "your resource name",
         "url": "your api url (you can use * as wildcard)",
