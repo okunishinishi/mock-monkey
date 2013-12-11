@@ -30,14 +30,14 @@ mixin resource-detail-form
                 tr
                     th: +label('resource-url-input')=l.url
                     td
-                        div
-                            each name in 'regex,string'.split(',')
+                        div#url-kind-div
+                            each name in 'string,regex'.split(',')
                                 +radio('resource-url-kind', data, name)(id='resource-url-kind-input-'+name)
                                 +label('resource-url-kind-input-' + name)=l[name]
                         div.positioned#url-input-div
                             span#url-input-prefix-span
                             +text("url", data)(id='resource-url-input', placeholder=l.placeholder.url).wide-input
-                            a#url-input-link(href='#', target='_blank').float-right=l.try_it
+                            a#url-input-link(href='#', target='_blank').float-right.anchor-btn=l.try_it
 
                 tr
                     th: +label('resource-type-input')=l.type
@@ -47,7 +47,9 @@ mixin resource-detail-form
 
                 tr.data-input-row
                     th: +label('resource-data-input')=l.data
-                    td: textarea(name='data').wide-textarea
+                    td
+                        div#data-input-div
+                            textarea(name='data').wide-textarea
         +submit-btn(l.save)
         +reset-btn(l.reset).hidden
 

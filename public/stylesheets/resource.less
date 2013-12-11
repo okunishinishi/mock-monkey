@@ -67,10 +67,20 @@ col:nth-child(1){
     left: 0;
     color:lighten(@gray,20);
     line-height: 1em;
+    .box-sizing(border-box);
+    padding-right:1px;
     top:4px;
     display: inline-block;
   }
 }
 [data-mode="edit"]{
   #url-input-link{display: none !important;}
+}
+[data-mode="view"]{
+  #url-kind-div{display: none !important;}
+}
+#data-input-div{
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
 }

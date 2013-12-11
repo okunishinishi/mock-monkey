@@ -9,6 +9,10 @@
  */
 (function ($, l, hbs) {
 
+    RegExp.escape = function(string) {
+        return string && string.replace(/[$-\/?[-^{|}]/g, '\\$&');
+    };
+
     $.fn.extend({
         resourceListSection: function (_id, callback) {
             var tmpl = {
@@ -101,10 +105,6 @@
                 detailForm = $('#resource-detail-form', section).resourceDetailForm();
 
 
-            var urlPrefix = location.origin + "/mock/",
-                urlPrefixSpan = $('#url-input-prefix-span', section).text(urlPrefix);
-
-
             destroyForm.destroyForm({
                 schema: v.resource.destroy,
                 destroyBtn: section.find('#resource-destroy-btn'),
@@ -132,12 +132,13 @@
 
                     destroyForm
                         .setFormValue(data);
-                    urlLink.update();
+                    urlInputDiv.update();
+                    section.layout();
                 });
                 section
                     .removeClass('empty-section');
                 options.load && options.load.call(section);
-                urlLink.update();
+                urlInputDiv.update();
                 section.layout();
                 return section;
             };
@@ -150,26 +151,53 @@
                         section.addClass('empty-section');
                         options.unload && options.unload.call(section);
                     });
-                urlLink.update();
+                urlInputDiv.update();
+                section.layout();
                 return section;
             };
             section.addClass('empty-section');
 
 
-            var urlLink = $('#url-input-link');
-            urlLink.update = function () {
-                var href = urlPrefix + ($('#resource-url-input').val() || '').replace(/\*/g, 'xxx');
+            var urlInputDiv = $('#url-input-div'),
+                urlLink = $('#url-input-link', urlInputDiv),
+                urlInput = $('#resource-url-input', urlInputDiv),
+                urlKindInput = section.findByName('resource-url-kind'),
+                urlPrefixSpan = $('#url-input-prefix-span', urlInputDiv);
+
+            urlInputDiv.update = function () {
+                if(!urlKindInput.filter(':checked').size()){
+                    urlKindInput.first().attr('checked', true);
+                }
+
+                var urlPrefix = location.origin + "/mock/";
+                var kind = urlKindInput.filter(':checked').val();
+                switch(kind){
+                    case 'regex':
+                        urlPrefix = RegExp.escape(urlPrefix);
+                        break;
+                }
+                urlPrefixSpan.text(urlPrefix);
+                var href = urlPrefix + (urlInput.val() || '').replace(/\*/g, 'xxx');
                 urlLink.attr('href', href);
+
                 return urlLink;
             };
-            urlLink.update();
 
             section.layout = function () {
-                $('#url-input-div').css({
-                    paddingLeft:urlPrefixSpan.outerWidth()
+                urlInputDiv.css({
+                    paddingLeft: urlPrefixSpan.outerWidth()
                 });
-                console.log('urlPrefixSpan.outerWidth()',urlPrefixSpan.outerWidth());
             };
+
+
+
+            urlKindInput.change(function(){
+                urlInputDiv.update();
+                section.layout();
+            });
+
+
+
 
             section.layout();
             return section;
