@@ -13,6 +13,7 @@ mixin sub-nav()
 mixin header-logo
     a.logo(href=url('/'), attributes)
         | #{l.app.name}
+    span.description=l.app.description
 
 mixin header(sign_user)
     header

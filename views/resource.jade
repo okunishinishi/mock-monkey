@@ -37,7 +37,8 @@ mixin resource-detail-form
                         div.positioned#url-input-div
                             span#url-input-prefix-span
                             +text("url", data)(id='resource-url-input', placeholder=l.placeholder.url).wide-input
-                            a#url-input-link(href='#', target='_blank').float-right.anchor-btn=l.try_it
+                            a#url-input-link(href='#', target='_blank').float-right
+                                i=l.try_it
 
                 tr
                     th: +label('resource-type-input')=l.type

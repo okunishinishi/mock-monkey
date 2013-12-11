@@ -1,7 +1,8 @@
 var l = exports;
 
 l.app = {
-    name: 'MockMonkey'
+    name: 'MockMonkey',
+    description:'mock api generator'
 };
 l.admin = 'admin';
 l.signin = 'sign in';
@@ -39,13 +40,13 @@ l.type = 'type';
 l.xml = 'XML';
 l.json = 'JSON';
 l.resource = 'resource';
-l.try_it = 'try it!';
+l.try_it = 'try it >>';
 l.regex = 'RegExp';
 l.string = 'String';
 
 l.placeholder = {};
 l.placeholder.name = 'your resource name';
-l.placeholder.url = 'your api url (you can use * as wildcard)';
+l.placeholder.url = 'your api url';
 l.placeholder.data = 'your resource data';
 
 l.msg = {};

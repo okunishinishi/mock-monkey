@@ -80,13 +80,14 @@
 
             return section;
         },
-        resourceDetailForm: function () {
+        resourceDetailForm: function (callback) {
             var form = $(this);
             form.detailForm({
                 schema: v.resource.update,
                 editBtn: ".edit-btn"
             }, function (data) {
                 form.setDetailFormValue(data.resource);
+                callback && callback();
             });
             form.setDetailFormValue = function (data) {
                 form.find(':reset').click();
@@ -102,7 +103,10 @@
         resourceDetailSection: function (options) {
             var section = $(this).show(),
                 destroyForm = $('#resource-destroy-form', section),
-                detailForm = $('#resource-detail-form', section).resourceDetailForm();
+                detailForm = $('#resource-detail-form', section).resourceDetailForm(function(){
+                    urlInputDiv.update();
+                    section.layout();
+                });
 
 
             destroyForm.destroyForm({
@@ -164,20 +168,31 @@
                 urlKindInput = section.findByName('resource-url-kind'),
                 urlPrefixSpan = $('#url-input-prefix-span', urlInputDiv);
 
+
+            function injectMockExp(regExpString){
+                return regExpString && regExpString.replace(/\\\//g, '/').replace(/\\d/g, '0')
+                    .replace(/\\{.*?\\}/g,'')
+                    .replace(/{.*?}/g,'')
+                    .replace(/[\+\*]/g, '')
+                    .replace(/\\\\/g, '');
+            }
+
             urlInputDiv.update = function () {
                 if(!urlKindInput.filter(':checked').size()){
                     urlKindInput.first().attr('checked', true);
                 }
 
                 var urlPrefix = location.origin + "/mock/";
-                var kind = urlKindInput.filter(':checked').val();
+                var kind = urlKindInput.filter(':checked').val(),
+                    urlValue = urlInput.val();
                 switch(kind){
                     case 'regex':
                         urlPrefix = RegExp.escape(urlPrefix);
+                        urlValue = injectMockExp(urlValue);
                         break;
                 }
                 urlPrefixSpan.text(urlPrefix);
-                var href = urlPrefix + (urlInput.val() || '').replace(/\*/g, 'xxx');
+                var href = injectMockExp(urlPrefix) + (urlValue || '');
                 urlLink.attr('href', href);
 
                 return urlLink;
