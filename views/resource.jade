@@ -1,0 +1,65 @@
+extends layout
+mixin resource-search-form
+    +search-form(action=url('/api/resource.json'), attributes)
+        h3.caption.float-left.no-margin=capitalize(pluralize(l.resource || ''))
+        +search('search_word', {}).float-right
+        +hidden('limit')(value=1000)
+        +hidden('skip')(value=0)
+        br.clear
+
+mixin resource-destroy-form
+    +destroy-form(action=url('/api/resource/destroy'), attributes).invisible-form
+        +hidden('_id')
+mixin resource-detail-form
+    +detail-form(action=url('/api/resource/save'), attributes)
+        +hidden('_id')
+        table.wide-table
+            colgroup
+                col
+                col
+            caption.hoverable
+                .float-right.hoverable-child
+                    +edit-btn().margin-link
+                    +destroy-btn()#resource-destroy-btn
+                br.clear
+            tbody
+                each name in 'name'.split(',')
+                    tr
+                        th: +label('resource-' + name + '-input')=l[name]
+                        td: +text(name, data)(id='resource-' + name + '-input').wide-input
+                tr
+                    th: +label('resource-url-input')=l.url
+                    td
+                        div.positioned#url-input-div
+                            span#url-input-prefix-span
+                            +text("url", data)(id='resource-url-input', placeholder=l.placeholder.url).wide-input
+                            a#url-input-link(href='#', target='_blank').float-right=l.try_it
+
+                tr
+                    th: +label('resource-type-input')=l.type
+                    td
+                        span=l.xml
+                        input(type='hidden', name='type', value='xml')
+
+                tr.data-input-row
+                    th: +label('resource-data-input')=l.data
+                    td: textarea(name='data').wide-textarea
+        +submit-btn(l.save)
+        +reset-btn(l.reset).hidden
+
+block stylesheets
+    +css('resource.css')
+block javascripts
+    +js('validation/v.resource.js')
+    +js('p.resource.js')
+block content
+    aside.wide-aside
+        section#resource-list-section
+            +resource-search-form#resource-search-form
+            .y-scrollable
+                ul#resource-list.editable-list
+            +new-btn#new-resource-btn
+    article
+        section#resource-detail-section(data-ref=url('/api/resource/:_id'))
+            +resource-destroy-form#resource-destroy-form
+            +resource-detail-form#resource-detail-form

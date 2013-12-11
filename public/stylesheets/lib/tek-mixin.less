@@ -1,0 +1,785 @@
+//<h1>tek-mixin.less-0.3.8</h1>
+
+/* <h3>color variables</h3>
+
+  ```
+    <p>
+      <span class="colored-box color-white">@white</span>
+      <span class="colored-box color-silver">@silver</span>
+      <span class="colored-box color-black">@black</span>
+      <span class="colored-box color-gray">@gray</span>
+      <span class="colored-box color-red">@red</span>
+      <span class="colored-box color-pink">@pink</span>
+      <span class="colored-box color-yellow">@yellow</span>
+      <span class="colored-box color-orange">@orange</span>
+      <span class="colored-box color-brown">@brown</span>
+      <span class="colored-box color-green">@green</span>
+      <span class="colored-box color-blue">@blue</span>
+      <span class="colored-box color-purple">@purple</span>
+      <span class="colored-box color-cyan">@cyan</span>
+    </p>
+  ```
+*/
+
+@white: #FFF;
+@silver: #F0F0F0;
+@black: #333;
+@gray: #666;
+@red: #F33;
+@pink: #F69;
+@yellow: #FF3;
+@orange: #FF6600;
+@brown: #930;
+@green: #3F3;
+@blue: #33F;
+@purple: #90C;
+@cyan: #6FF;
+
+/* <h3>media size</h3>
+   <p>
+     <dl>
+        <dt><b>@phonePortrait</b></dt>
+        <dd>phone size when put vertical</dd>
+        <dt><b>@phoneLandscape</b></dt>
+        <dd>phone size when put horizontal</dd>
+        <dt><b>@tabletPortrait</b></dt>
+        <dd>tablet size when put vertical</dd>
+        <dt><b>@tabletLandscape</b></dt>
+        <dd>tablet size when put horizontal</dd>
+     </dl>
+   </p>
+*/
+@phonePortrait: 420px;
+@phoneLandscape: 600px;
+@tabletPortrait: 780px;
+@tabletLandscape: 1024px;
+/*
+  <h3>linear gradient</h3>
+  <p>
+    .linear-gradient(@blue, darken(@blue, 30));
+  </p>
+  ```
+    <div class="blue-gradient gradient-box"></div>
+  ```
+*/
+
+.linear-gradient(@style) {
+  background-image: -webkit-linear-gradient(@style);
+  background-image: -moz-linear-gradient(@style);
+  background-image: -o-linear-gradient(@style);
+  background-image: -ms-linear-gradient(@style);
+  background-image: linear-gradient(@style);
+}
+
+.linear-gradient(@from; @to) {
+  background-color: @to;
+  .linear-gradient(~`"@{from},@{to}"`);
+}
+
+.linear-gradient(none) {
+  background-image: none;
+}
+
+/*
+  <h3>radial gradient</h3>
+  <p>
+    .radial-gradient(20%, 40%, @green, darken(@green, 50));
+  </p>
+  ```
+    <div class="green-radial-gradient radial-gradient-box"></div>
+  ```
+*/
+
+.radial-gradient(@style) {
+  background-image: -webkit-radial-gradient(@style);
+  background-image: -moz-radial-gradient(@style);
+  background-image: -o-radial-gradient(@style);
+  background-image: -ms-radial-gradient(@style);
+  background-image: radial-gradient(@style);
+}
+
+.radial-gradient(@x; @y; @from; @to) {
+  background-color: @to;
+  @style: ~`"@{x} @{y}, circle, @{from}, @{to}"`;
+  .radial-gradient(@style);
+}
+
+.radial-gradient(none) {
+  background-image: none;
+}
+
+/*
+  <h3>stripe</h3>
+  <p>
+    .stripe(40px, lighten(@orange, 20));
+  </p>
+
+  ```
+    <div class="stripe-box orange-stripe"></div>
+
+  ```
+*/
+.stripe(@size; @color;@deg:-45deg;) {
+  background-size: @size * 2 @size * 2;
+  @style: ~`"@{deg}, @{color} 25%, transparent 25%, transparent 50%, @{color} 50%, @{color} 75%, transparent 75%"`;
+  .linear-gradient(@style);
+}
+
+.box-shadow(@style; @dense) {
+  .box-shadow(@style rgba(0, 0, 0,@dense));
+}
+
+.box-shadow(@shadow) {
+  -webkit-box-shadow: @shadow;
+  -moz-box-shadow: @shadow;
+  -o-box-shadow: @shadow;
+  -ms-box-shadow: @shadow;
+  box-shadow: @shadow;
+}
+
+.box-shadow(@style; @dense; inset) {
+  @shadow: @style rgba(0, 0, 0,@dense) inset;
+  .box-shadow(@shadow);
+}
+
+.text-shadow(@shadow) {
+  -moz-text-shadow: @shadow;
+  -o-text-shadow: @shadow;
+  -ms-text-shadow: @shadow;
+  text-shadow: @shadow;
+}
+
+.text-shadow(@style, @dense) {
+  .text-shadow(@style rgba(0, 0, 0,@dense));
+}
+
+//noinspection CssOverwrittenProperties
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -o-border-radius: @radius;
+  -ms-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.border-radius(@UL, @UR, @DR, @DL) {
+  .border-radius(@UL @UR @DR @DL);
+}
+
+.border-radius(@UP, @DOWN) {
+  .border-radius(@UP @UP @DOWN @DOWN);
+}
+
+.box-sizing(@sizing) {
+  -moz-box-sizing: @sizing;
+  -webkit-box-sizing: @sizing;
+  -o-box-sizing: @sizing;
+  -ms-box-sizing: @sizing;
+  box-sizing: @sizing;
+}
+
+.square(@length) {
+  width: @length;
+  height: @length;
+}
+
+.circle(@radius) {
+  .border-radius(50%);
+  .square(@radius * 2);
+}
+
+.circle(@radius, @color) {
+  .circle(@radius);
+  background-color: @color;
+}
+
+/*
+  <h3>rotate</h3>
+  <p>
+  .rotate(45deg);
+  </p>
+  ```
+    <div class="box rotate45"></div>
+  ```
+*/
+
+//noinspection CssUnknownProperty
+.rotate(@deg) {
+  -webkit-transform: rotate(@deg);
+  -moz-transform: rotate(@deg);
+  -o-transform: rotate(@deg);
+  -ms-transform: rotate(@deg);
+  transform: rotate(@deg);
+}
+
+//noinspection CssUnknownProperty
+.scale(@scale) {
+  -moz-transform: scale(@scale);
+  -webkit-transform: scale(@scale);
+  -ms-transform: scale(@scale);
+  -o-transform: scale(@scale);
+  transform: scale(@scale);
+}
+
+/*
+  <h3>skew</h3>
+  <p>
+    .skew(30deg);
+  </p>
+  ```
+    <div class="box skew30"></div>
+  ```
+ */
+
+//noinspection CssUnknownProperty
+.skew(@deg) {
+  -webkit-transform: skew(@deg);
+  -moz-transform: skew(@deg);
+  -o-transform: skew(@deg);
+  -ms-transform: skew(@deg);
+  transform: skew(@deg);
+}
+
+.etched(@dense) {
+  .text-shadow(0 1px 0 rgba(255, 255, 255,@dense));
+}
+
+.white-back(@dense) {
+  background-color: rgba(255, 255, 255,@dense);
+}
+
+.black-back(@dense) {
+  background-color: rgba(0, 0, 0,@dense);
+}
+
+//noinspection CssUnknownProperty
+.user-select(@userSelect) {
+  -webkit-user-select: @userSelect;
+  -moz-user-select: @userSelect;
+  -o-user-select: @userSelect;
+  -ms-user-select: @userSelect;
+  user-select: @userSelect;
+}
+
+//noinspection CssUnknownProperty
+.pointer-events(@event) {
+  -ms-pointer-events: @event;
+  -moz-pointer-events: @event;
+  -o-pointer-events: @event;
+  pointer-events: @event;
+}
+
+.grabbable() {
+  cursor: pointer;
+  cursor: -moz-grab;
+  cursor: -o-grab;
+  cursor: -webkit-grab;
+  cursor: -ms-grab;
+  &:active {
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    cursor: -o-grabbing;
+    cursor: -ms-grabbing;
+  }
+}
+
+.cover(@z) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: @z;
+  content: '';
+  text-align: center;
+  .box-sizing(border-box);
+}
+
+.stick-left(@px) {
+  position: absolute;
+  left: @px;
+}
+
+.stick-top(@px) {
+  position: absolute;
+  top: @px;
+}
+
+.stick-right(@px) {
+  position: absolute;
+  right: @px;
+}
+
+.stick-bottom(@px) {
+  position: absolute;
+  bottom: @px;
+}
+
+.transition(@property) {
+  -webkit-transition: @property;
+  -moz-transition: @property;
+  -ms-transition: @property;
+  -o-transition: @property;
+  transition: @property;
+}
+
+
+.header(@back) {
+  background-color: @back;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  .box-sizing(border-box);
+  .box-shadow(0 1px 2px, 0.5);
+  padding: 5px 10px;
+}
+
+.nav() {
+  display: inline-block;
+}
+
+.nav-item(@back) {
+  display: inline-block;
+  background-color: @back;
+  padding: 5px 10px;
+  &:hover {
+    text-decoration: none;
+  }
+  &:active {
+  }
+}
+
+.nav-item(@from, @to) {
+  .nav-item(@from);
+  .linear-gradient(@from, @to);
+  &:active {
+    .linear-gradient(none);
+  }
+}
+
+.nav-item() {
+  .nav-item(transparent);
+}
+
+.btn(@color) {
+  display: inline-block;
+  .linear-gradient(@color, darken(@color, 10));
+  border: 1px solid darken(@color, 12);
+  .box-shadow(1px 1px 2px, 0.2);
+  .border-radius(5px);
+  padding: 0.5em 1em;
+  cursor: pointer;
+  color: darken(@color, 70);
+  .user-select(none);
+  &:hover {
+    .linear-gradient(lighten(@color, 3), darken(@color, 6));
+    .box-shadow(1px 1px 2px, 0.3);
+    border-color: darken(@color, 8);
+    color: darken(@color, 80);
+    text-decoration: none;
+  }
+  &:active, &.active {
+    .box-shadow(none);
+    background-image: none;
+    color: darken(@color, 50);
+  }
+}
+
+.table(@back) {
+  border-collapse: collapse;
+  th, td {
+    padding: 5px 10px;
+    background-color: @back;
+    border: 1px solid darken(@back, 4);
+  }
+  th {
+    .linear-gradient(@back, darken(@back, 3));
+  }
+}
+
+.stripe-table(@back1, @back2) {
+  .table(@back1);
+  tbody {
+    tr :nth-child(even) {
+      background-color: darken(@back2, 1);
+    }
+  }
+}
+
+.a(@color) {
+  color: @color;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.remove-btn() {
+  padding: 1px 4px;
+  color: gray;
+  font-size: 1.5em;
+  top: 2px;
+  opacity: 0.5;
+  position: absolute;
+  right: 5px;
+  text-decoration: none;
+  line-height: 1em;
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}
+
+.block-list-header(@back) {
+  background-color: @back;
+  .linear-gradient(@back, darken(@back, 8));
+  padding: 5px 15px;
+  .box-shadow(1px 1px 2px, 0.4);
+}
+
+.block-list(@back, @highlight) {
+  padding: 0;
+  margin-top: 0;
+  li {
+    list-style: none;
+    padding: 5px 15px;
+    margin-bottom: -1px;
+    border: 1px solid darken(@back, 10);
+    background-color: @back;
+    position: relative;
+    &:hover {
+      @back: fadeout(@highlight, 90);
+      background-color: @back;
+      border-color: darken(@back, 10);
+      z-index: 99;
+
+      .block-list-item-control {
+        opacity: 1;
+      }
+    }
+    &:active {
+      color: @white;
+      background-color: @highlight;
+      border-color: darken(@highlight, 10)
+    }
+    .block-list-item-control {
+      opacity: 0.1;
+    }
+  }
+}
+
+.no-style-list() {
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+  }
+}
+
+.black-cover() {
+  z-index: 999;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  .black-back(0.4);
+}
+
+.block-table() {
+  width: 100%;
+  thead, tbody, tfoot,
+  tr, th, td {
+    display: block;
+    width: 100%;
+  }
+}
+
+.add-btn(@color:@gray;@back:@white;) {
+  .box-shadow(1px 1px 2px, 0.4);
+  .border-radius(2px);
+  opacity: 0.5;
+  padding: 2px 4px;
+  text-align: center;
+  color: @color;
+  background-color: @back;
+  border: 1px solid darken(@white, 1);
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+    border-color: darken(@white, 10);
+  }
+  &:active {
+    color: @back;
+    background-color: lighten(@color, 30);
+    .box-shadow(none);
+  }
+}
+
+.tab(@back:@white;@highlight:lighten(@blue,5)) {
+  .border-radius(12px; 0;);
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: @back;
+  border: 1px solid darken(@back, 10);
+  color:@gray;
+  float: left;
+  margin:4px 0 -1px;
+  text-align: center;
+  &:hover {
+    text-decoration: none;
+    @back:lighten(@highlight,10);
+    background-color: @back;
+    border-color:@back;
+    color:@white;
+  }
+  &:active{
+    @back:lighten(@highlight,1);
+    background-color: @back;
+    border-color:@back;
+  }
+}
+.fixed-tab(@back:@gray;@color:@white){
+  background-color: @back;
+  border-color: @back;
+  color: @color;
+  &:hover,
+  &:active{
+    cursor: default;
+    background-color: @back;
+    border-color: @back;
+    color: @color;
+  }
+}
+/*
+   <h3>baloon</h3>
+   <p>
+      .red-balloon{
+        .balloon(@red);
+      }
+      .green-balloon{
+        .balloon(@green);
+      }
+      .blue-balloon{
+        .balloon(@blue);
+      }
+      .yellow-balloon{
+        .balloon(@yellow);
+      }
+   </p>
+   ```
+      <div>
+        <div class="red-balloon"> red baloon </div>
+        <div class="green-balloon"> green baloon </div>
+        <div class="blue-balloon"> blue baloon </div>
+        <div class="yellow-balloon"> yellow baloon </div>
+      </div>
+   ```
+*/
+.balloon(@color:@blue;){
+  padding:5px 10px;
+  .border-radius(4px);
+  @back:lighten(@color, 20);
+  background-color: @back;
+  border:4px solid darken(@back, 10);
+  color:hardlight(@back, #555);
+  margin:4px 8px;
+  .box-shadow(1px 1px 2px rgba(0,0,0,0.1));
+}
+
+
+
+.checkbox-radio-style(@back:@black;@color:@white;){
+  @margin:5px;
+  @bottom:4.5px;
+  @left:@margin + 2px;
+  [type="checkbox"],
+  [type="radio"]{
+    display: none;
+    & + label{
+      .psude-style(@size, @back){
+        .square(@size * 2);
+        background-color: @back;
+        display: inline-block;
+        content:'';
+      }
+      .abs-style(@bottom, @left){
+        bottom:@bottom;
+        left:@left;
+        position: absolute;
+      }
+      position: relative;
+      padding-left:20px;
+      &:before{
+        .psude-style(5px, @back);
+        .box-shadow(1px 1px 1px;.4;inset);
+        .abs-style(@bottom, @left);
+      }
+      &:after{
+        .psude-style(3px;@color);
+        .abs-style(@bottom + 2px, @left + 2px);
+        display: none;
+      }
+    }
+    &:checked{
+      & + label{
+        &:after{
+          display: inline-block;
+        }
+      }
+    }
+  }
+  [type="radio"]{
+    & + label{
+      &:before,&:after{
+        .border-radius(50%);
+      }
+    }
+  }
+  [type="checkbox"]{
+    & + label{
+      &:before{
+        .border-radius(2px;);
+      }
+      &:after{
+        .rotate(45deg);
+        width:2px;
+        height: 5px;
+        left:@left + 3px;
+        border:2px solid @color;
+        border-top:none;
+        border-left:none;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+
+
+
+.rich() {
+
+  .photo {
+    display: inline-block;
+    margin: 5px;
+    .user-select(none);
+    .border-radius(3px);
+    border: 1px solid darken(@white, 10);
+    padding: 16px 12px 45px;
+    position: relative;
+    &:hover {
+      cursor: pointer;
+      .box-shadow(0 0 20px @yellow);
+      top: -1px;
+      .photo-inner {
+        &:after {
+          background-color: fadeout(@yellow, 96);
+        }
+      }
+    }
+    &:active {
+      .box-shadow(0 0 60px @yellow);
+      position: relative;
+      top: -2px;
+      .photo-inner {
+        &:after {
+          .white-back(0.1);
+        }
+      }
+    }
+    &.selected {
+      .box-shadow(0 0 40px @yellow);
+    }
+  }
+
+  .photo-inner {
+    .border-radius(3px);
+    @back: darken(@white, 16);
+    background-color: @back;
+    width: 220px;
+    height: 200px;
+    border: 1px solid darken(@back, 3);
+    .box-shadow(1px 1px 2px, 0.2, inset);
+    overflow: hidden;
+    &:after {
+      .cover(10);
+      background-color: transparent;
+    }
+  }
+
+  .paper {
+    position: relative;
+    margin: 5px;
+    padding: 0;
+    .box-shadow(1px 1px 3px, 0.4);
+    color: lighten(@black, 10);
+    &:before, &:after {
+      content: '';
+      width: 50%;
+      height: 20%;
+      bottom: 15px;
+      position: absolute;
+      z-index: 1;
+      .black-back(0.7);
+      .box-shadow(0 15px 10px, 0.7);
+    }
+    @deg: 3deg;
+    &:before {
+      left: 4px;
+      .rotate(-1 * @deg);
+    }
+    &:after {
+      right: 10px;
+      .rotate(@deg);
+    }
+  }
+
+  .paper-content {
+    position: relative;
+    z-index: 5;
+    background-color: #FFF;
+    border: 1px solid @silver;
+    padding: 5px 20px 15px;
+    .border-radius(2px);
+    min-width: 120px;
+    min-height: 40px;
+    &.taped {
+      &:before, &:after {
+        content: "";
+        position: absolute;
+        .white-back(0.35);
+        width: 85px;
+        height: 30px;
+        top: 0;
+        .box-shadow(1px 1px 2px, 0.2);
+      }
+      @rotate: 15deg;
+      @side: -20px;
+      &:before {
+        left: @side;
+        .rotate(-1 *  @rotate);
+      }
+      &:after {
+        right: @side;
+        .rotate(@rotate);
+      }
+    }
+  }
+
+  .paper-title {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: lighten(@black, 40);
+  }
+
+  .paper-title-lead {
+    opacity: 0.6;
+    font-weight: bold;
+    padding: 2px 0;
+    font-size: 12px;
+    display: block;
+    font-style: italic;
+  }
+}

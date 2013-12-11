@@ -1,0 +1,106 @@
+include mixins
+
+
+mixin nav-item(href, label)
+    - var u_label = label && (label.substr(0,1).toUpperCase() + label.substr(1));
+    a.nav-item(href=url(href), attributes)=u_label
+        block
+
+mixin sub-nav()
+    nav.sub-nav.hidden(attributes)
+        block
+
+mixin header-logo
+    a.logo(href=url('/'), attributes)
+        | #{l.app.name}
+
+mixin header(sign_user)
+    header
+        +header-logo
+        nav#header-top-nav
+            if sign_user
+
+                case sign_user.role
+                    when 'admin'
+                        +nav-item('#admin-sub-nav', l.admin).admin-btn.has-sub-nav
+
+                +nav-item('#account-sub-nav',sign_user.username).account-btn.has-sub-nav
+            else
+                +nav-item('/sign', l.signin).signin-btn#signin-link-btn
+
+        +sub-nav#admin-sub-nav
+            +nav-item('/admin/user', l.user)#user-link-btn
+            +nav-item('/admin/master', l.master)#master-link-btn
+
+        +sub-nav#account-sub-nav
+            +nav-item('/mypage', l.mypage).mypage-btn#mypage-link-btn
+            form#signout-form.inline-form(method='post',action=url('/signout'))
+                +nav-item('#',l.signout)(onclick="$('#signout-form').submit();").signout-btn
+
+
+
+mixin common-stylesheets(env)
+    +css('/base/style.css')
+
+
+mixin common-javascripts(env)
+
+    +js("locale/l."+lang+".js")
+
+    if env == 'production'
+        +js('lib.min.js')
+    else
+        each lib_js_name in lib_js_names
+            +js('lib/' + lib_js_name )
+
+    +js('templates.js')
+    +js('p.js')
+    +js('validation/v.js')
+
+    //if lt IE 7
+        +js('/lib/ie/IE7.js')
+    //if lt IE 8
+        +js('/lib/ie/IE8.js')
+    //if lt IE 9
+        +js('/lib/ie/IE9.js')
+        +js('/lib/ie/selectivizr-min.js')
+        +js('/lib/ie/excanvas.js')
+    //if lt IE 10
+        +js('/lib/ie/html5shiv.js')
+        +js('/lib/ie/css3-mediaqueries.js')
+
+doctype 5
+html
+    head
+        +charset('utf-8')
+        +view-port('width=device-width')
+        +title(l.app.name)
+        +favicon('/fav.ico')
+        +touch-icon('/touch.ico')
+
+        +common-stylesheets(env)
+
+        block stylesheets
+
+        +common-javascripts(env)
+
+        script.
+            window.ctx = "#{context}";
+
+        block javascripts
+
+        block head
+
+    body
+        +header(sign_user)
+        #main
+            +alert(err_alert, 'err-alert')
+            +alert(warn_alert, 'warn-alert')
+            +alert(info_alert, 'info-alert')
+
+            block content
+
+        br.clear
+
+        footer
+

@@ -1,0 +1,67 @@
+extends layout
+
+mixin text-field(id, name)
+    .field
+        +label(id)=l[name]
+        +text(name).wide-input(id=id)
+
+mixin password-field(id, name)
+    .field
+        +label(id)=l[name]
+        +password(name).wide-input(id=id)
+
+mixin submit-area(label)
+    .btn-area
+        +submit-btn(label)
+
+mixin signin_form()
+    form#signin-form.sign-form(method='post', action=url('/api/signin'))
+        +text-field('signin-username_or_email-input','username_or_email')
+        +password-field('signin-password-input', 'password')
+        +submit-area(l.signin)
+
+mixin signup_form()
+    form#signup-form.sign-form(method='post', action=url('/api/signup'))
+        +text-field('signup-username-input','username')
+        +password-field('signup-password-input','password')
+        br
+        .field.positioned
+            label.block-label(for='captcha_text-input')=l.msg.prove_human_please
+            img#captcha-img(data-src=url('/sign/captcha'))
+            a(href='javascript:void(0)')#captcha-refresh-btn.refresh-btn
+                small=l.refresh
+            br
+            +text('captcha_text')#captcha_text-input(placeholder=l.msg.input_captcha_please)
+
+        .btn-area
+            +submit-btn(l.signup)
+
+mixin tab()
+    label.tab(attributes)
+        block
+
+block javascripts
+    +js('validation/v.sign.js')
+    +js('p.sign.js')
+
+block stylesheets
+
+    +css("sign.css")
+
+block content
+
+    section#logo-section.float-left
+        h1#large-logo=l.app.name
+
+    section#sign-section.inline-section.float-right
+        #sign-tabs.tabs
+            +tab()(for='signin-tab-content')=l.signin
+            +tab()(for='signup-tab-content')=l.signup
+            br.clear
+        #sign-tab-contents.tab-contents
+            .tab-content#signin-tab-content
+                +signin-form()
+                a#signin-success-link(href=back_url&&back_url.length?back_url:url('/'))
+            .tab-content#signup-tab-content(style='display:none;')
+                +signup-form()
+                a#signup-success-link(href=url('/'))

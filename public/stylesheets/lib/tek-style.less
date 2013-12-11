@@ -1,0 +1,162 @@
+//<h1>tek-style.less-0.3.12</h1>
+@import "tek-mixin";
+@font-face {
+  font-family: "Ionicons";
+  src: url("../fonts/ionicons.eot?v=1.3.6");
+  src: url("../fonts/ionicons.eot?v=1.3.6#iefix") format("embedded-opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+//<h1>tek-style.less-0.2.48</h1>
+
+@font-face {
+  font-family: "Ionicons";
+  src: url("../fonts/ionicons.eot?v=1.3.6#iefix") format("embedded-opentype"), url("../fonts/ionicons.woff?v=1.3.6") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ion {
+  display: inline-block;
+  font-family: "Ionicons";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*******************
+ * prefix
+ *******************/
+[class^="inline-"],[class*=" inline-"] {
+  display: inline-block;
+}
+
+[class^="block-"],[class*=" block-"] {
+  display: block;
+}
+
+[class^="wide-"],[class*=" wide-"] {
+  width: 100%;
+  .box-sizing(border-box);
+}
+
+/*******************
+ * sizing
+ *******************/
+.border-box {
+  .box-sizing(border-box);
+}
+
+.small {
+  font-size: 0.75em;
+}
+
+/*******************
+ *  mouse events
+ *******************/
+.unselectable {
+  .user-select(none);
+}
+
+.unpointable {
+  .pointer-events(none);
+}
+
+.grabbable {
+  .grabbable();
+}
+
+/*******************
+ *  positioning
+ *******************/
+.positioned {
+  position: relative;
+}
+
+@stick:0;
+.stick-left {
+  .stick-left(@stick);
+}
+
+.stick-right {
+  .stick-right(@stick);
+}
+
+.stick-top {
+  .stick-top(@stick);
+}
+
+.stick-bottom {
+  .stick-bottom(@stick);
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.clear {
+  clear: both;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.cover {
+  .cover(101);
+}
+
+/******************
+ display
+*******************/
+.hidden {
+  display: none;
+}
+
+.hoverable{
+  .hoverable-child{
+    opacity: .5;
+  }
+  &:hover{
+    .hoverable-child{
+      opacity: 1;
+    }
+  }
+}
+
+
+.dialog{
+  .cover();
+  .box-sizing(border-box);
+  background-color: fadeout(gray, 50);
+}
+.dialog-inner{
+  margin: 10% auto;
+  padding: 10px;
+  display: inline-block;
+  background-color: white;
+  position: relative;
+  .close-btn{
+    top:4px;
+    right:8px;
+  }
+}

@@ -1,0 +1,26 @@
+@import "../lib/tek-mixin";
+@import "colors";
+@import "fonts";
+@import "mixins";
+
+/**************
+ phone portrait
+**************/
+@media screen and (max-width:@phonePortrait) {
+  body{
+    padding: 20px 0;
+  }
+  header{
+    padding-left: 5px;
+    padding-right:5px;
+  }
+  .inline-section,
+  .inline-form{
+    .box-sizing(border-box);
+    width:100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left:0;
+    margin-right: 0;
+  }
+}

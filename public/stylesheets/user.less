@@ -1,0 +1,34 @@
+@import "lib/tek-mixin";
+@import "base/colors";
+@import "base/mixins";
+
+@aside:260px;
+#main{
+  padding-left: @aside;
+  position: relative;
+}
+aside{
+  position: absolute;
+  left: 0;
+  top:0;
+  width:@aside;
+  .padding-box();
+  &.animatable{
+    .transition(width 500ms;);
+  }
+}
+article{
+  .padding-box();
+  max-width:600px;
+  margin: 0 20px;
+}
+
+col:nth-child(1){
+  width:200px;
+}
+
+.empty-section{
+  form{
+    display: none !important;
+  }
+}

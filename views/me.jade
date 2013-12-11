@@ -1,0 +1,52 @@
+extends layout
+
+mixin my-detail-form(data)
+    +detail-form(action=url('/api/me/update'), attributes)
+        each name in '_id,_vr'.split(',')
+            +hidden(name, data)
+
+        table.wide-table
+            caption
+                span=capitalize(l.profile)
+                +edit-btn()#me-edit-btn.float-right
+            tbody
+                each name in 'username,email'.split(',')
+                    tr
+                        th: +label('my-' + name + '-input')=l[name]
+                        td: +text(name, data)(id='my-' + name + '-input')
+                tr.hoverable
+                    th: +label=l.password
+                    td
+                        span=l.masked_password_value
+                        +empty-link(l.change).float-right.small.hoverable-child#my-password-change-btn
+
+        +submit-btn(l.save)
+
+mixin my-password-change-form(data)
+    form(action=url('/api/me/change_password'), method='post', attributes)
+        h2
+        +hidden('_id', data)
+        a(data-role='success-link', href=url('/mypage')).hidden
+        table.wide-table
+            tbody: each name in 'password,password_again'.split(',')
+                tr
+                    th: +label('my-' + name + '-input')=l[name]
+                    td: +password(name, data)(id='my-' + name + '-input')
+
+        +submit-btn(l.save)
+
+block stylesheets
+    +css("me.css")
+
+
+block javascripts
+    +js('validation/v.me.js')
+    +js('p.me.js')
+
+
+block content
+    article
+        section#my-detail-section.inline-section
+            +my-detail-form(me)#my-detail-form
+
+            +my-password-change-form(me)#my-password-change-form

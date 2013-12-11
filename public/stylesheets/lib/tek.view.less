@@ -1,0 +1,302 @@
+//<h1>tek.view.less-0.3.13</h1>
+//stylesheet for tek.view
+@import "tek-mixin";
+
+
+@danger: #FF99AC;
+@highlight: lighten(@blue, 5);
+@color: #666666;
+@err: #FE5454;
+
+.tk-dialog,
+.tk-confirm-dialog {
+  .black-cover();
+  color: @color;
+  padding-top: 120px;
+  z-index: 2000;
+  .disabled {
+    opacity: 0.3;
+    .box-shadow(none);
+    background-image: none;
+    &:hover {
+      background-image: none;
+    }
+  }
+}
+
+.tk-loading {
+  opacity: .5;
+}
+
+.tk-dialog-inner() {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+  @back: @white;
+  background-color: @back;
+  .border-radius(4px);
+  .box-shadow(4px 4px 8px, 0.5);
+  padding: 15px 20px;
+}
+.tk-dialog-inner,
+.tk-confirm-dialog-inner {
+  .tk-dialog-inner();
+}
+
+.tk-confirm-dialog-title {
+  margin: 2px auto 4px;
+}
+
+.tk-danger-btn {
+  .btn(@danger);
+  &[disabled="disabled"],
+  &[disabled="disabled"]:hover,
+  &[disabled="disabled"]:active {
+    opacity: 0.3;
+    .text-shadow(none);
+    background-image: none;
+  }
+}
+.tk-dialog-close-btn,
+.tk-confirm-dialog-close-btn {
+  .remove-btn();
+}
+
+.tk-wide-btn {
+  width: 100%;
+  .box-sizing(border-box);
+  display: block;
+  text-align: center;
+}
+
+.tk-selectable-text-list {
+  position: absolute;
+  background-color: @white;
+  .box-shadow(2px 2px 4px; .5);
+  padding: 0;
+  margin: 0;
+  z-index: 2000;
+  li {
+    margin: 0;
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    &.tk-selected {
+      a {
+        background-color: @highlight;
+        color: @white;
+      }
+    }
+    a {
+      display: block;
+      padding: 4px 8px;
+      color: @gray;
+      border-top: 1px solid darken(@white, 3);
+      text-decoration: none;
+      &:hover {
+        background-color: @highlight;
+        color: @white;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.tk-no-support-dialog {
+  background: rgb(0, 0, 0);
+  .black-cover();
+  color: @color;
+  padding-top: 120px;
+  z-index: 2000;
+  text-align: center;
+  .black-back(.8);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
+.tk-no-support-dialog-inner {
+  .tk-dialog-inner();
+  text-align: left;
+  max-width: none;
+  display: inline-block;
+  a {
+    text-decoration: none;
+    color: #617DC5;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .tk-icon {
+    position: relative;
+    top: 3px;
+  }
+  li {
+    list-style: none;
+  }
+  h1 {
+    margin: 0;
+  }
+}
+
+.tk-icon {
+  width: 16px;
+}
+
+.tk-spy {
+  position: fixed;
+  top: 0;
+}
+.tk-spy-hidden{
+  display: none !important;
+}
+
+.tk-err-balloon {
+  @back: lighten(@err, 22);
+  background-color: @back;
+  border: 4px solid darken(@back, 10);
+  .border-radius(4px);
+  padding: 5px 10px;
+  .cover(99);
+  text-align: left;
+  height: auto;
+  @color: #552525;
+  color: @color;
+  .tk-close-btn {
+    @color: darken(@back, 10);
+    color: @color;
+    text-decoration: none;
+    &:hover {
+      color: saturate(@color, 10);
+    }
+  }
+}
+
+.tk-text-center {
+  text-align: center;
+}
+
+.tk-hit-word {
+  background-color: lighten(@yellow, 20);
+  color: rgb(88, 53, 20);
+}
+
+.tk-sortable-th {
+  @color: @gray;
+  label {
+    position: relative;
+    cursor: pointer;
+  }
+  label:before {
+    content: "";
+    @w: 5px;
+    border-style: solid;
+    .square(0);
+    border-width: @w;
+    display: none;
+    border-color: transparent;
+    margin: 0 3px;
+    position: absolute;
+    left: -5px;
+    top: 7px;
+  }
+  @l: 12px;
+  &[data-tk-asc="false"] {
+    label {
+      padding-left: @l;
+    }
+    label:before {
+
+      display: inline-block;
+      border-top-width: 0;
+      border-bottom-color: @color;
+    }
+  }
+  &[data-tk-asc="true"] {
+    label {
+      padding-left: @l;
+    }
+    label:before {
+      display: inline-block;
+      border-top-color: @color;
+      border-bottom-width: 0;
+    }
+  }
+}
+
+.tk-upload-form {
+  @back: @white;
+  @highlight: darken(@yellow, 15);
+  .square(200px);
+  background-color: @back;
+  text-align: center;
+  color: lighten(@black, 20);
+  .box-shadow(2px 2px 4px, 0.4, inset);
+  font-size: 2em;
+  position: relative;
+  font-weight: bold;
+  padding: 20px 0 0;
+  &:hover {
+    font-style: italic;
+  }
+  &.loading {
+    opacity: 0.8;
+  }
+  &.tk-drop-ready {
+    color: @white;
+    background-color: @highlight;
+  }
+
+  [type="file"] {
+    opacity: 0;
+  }
+  .tk-cover {
+    .cover(2);
+  }
+}
+
+.tk-transferable {
+  @second: 1s;
+  .transition(width @second, height @second;);
+}
+
+.tk-transferable-item {
+  position: relative;
+}
+
+.tk-transferable-drop-ready {
+  background-color: lighten(@yellow, 20);
+}
+
+.tk-slide-menu {
+  overflow-x: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  .tk-slide-menu-content {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .tk-slide-menu-inner {
+    position: relative;
+  }
+  .tk-slide-menu-open-btn {
+    display: inline-block;
+  }
+  .tk-slide-menu-close-btn {
+    display: none;
+  }
+  &.tk-slide-menu-opened {
+    .tk-slide-menu-open-btn {
+      display: none;
+    }
+    .tk-slide-menu-close-btn {
+      display: inline-block;
+    }
+  }
+}
+
+.tk-pre {
+  white-space: pre;
+}
+
+.tk-hidden{
+  display: none !important;
+}

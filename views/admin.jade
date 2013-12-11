@@ -1,0 +1,10 @@
+extends layout
+
+
+mixin link-list-item(href, label)
+    li:a(href=href, attributes)=label
+
+block content
+    ul
+        li:a(href='/admin/user', l.user_manage)
+        li:a(href='/admin/master', l.master_manage)

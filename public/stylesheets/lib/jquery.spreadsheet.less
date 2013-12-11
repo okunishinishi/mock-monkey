@@ -1,0 +1,90 @@
+//jquery.spreadsheet.less-0.3.1
+@import "tek-mixin";
+
+
+.ss-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y:visible;
+}
+
+.ss-scrollable {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y:visible;
+}
+
+.ss-th-hover {
+  background-color: @white;
+  background-image: none;
+}
+
+.ss-th {
+  color: lighten(@gray, 20);
+}
+
+.ss-tbody-row {
+  @back: @white;
+  @highlight: lighten(@yellow, 30);
+  .ss-cell {
+    .ss-cell(darken(@back, 0), @highlight);
+    cursor: default;
+  }
+  &:nth-child(even) {
+    .ss-cell {
+      .ss-cell(darken(@back, 1), @highlight);
+    }
+  }
+}
+
+.ss-cell(@back, @highlight) {
+  background-color: @back;
+  position: relative;
+  &:hover {
+    background-color: @highlight;
+    z-index: 200;
+    border-color: darken(@highlight, 4);
+    color: darken(@highlight, 70);
+  }
+}
+
+.ss-left-fixed-table {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 999;
+  thead,tbody,tr,th,td{
+    display: block;
+  }
+  .box-shadow(1px 1px 1px rgba(100, 100, 100, .1));
+}
+
+.top-fixed-thead {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: none;
+  z-index: 1001;
+  th:first-child {
+    display: block;
+    padding: 0;
+    position: relative;
+    z-index: 1001;
+    background-color: @white;
+  }
+  .box-shadow(1px 1px 2px; .2);
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .top-fixed-thead {
+    th{
+      padding-right:10px;
+    }
+  }
+}
+
+

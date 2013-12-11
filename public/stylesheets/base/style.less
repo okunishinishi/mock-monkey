@@ -1,0 +1,260 @@
+@import "../lib/tek-mixin";
+@import "../lib/tek.view.less";
+@import "../lib/tek-style-flat";
+@import "colors";
+@import "fonts";
+@import "mixins";
+
+body {
+  margin: 0 auto;
+  padding: 0 0 20px;
+  .font-roboto-light;
+  background-color: @back;
+}
+
+.hidden {
+  display: none !important;
+}
+
+header {
+  position: fixed;
+  background: fadeout(@back,30);
+  padding: 0;
+  .logo {
+    .padding-box();
+    font-size: 2em;
+    z-index: 1;
+  }
+  @subNavColor: #DDDDDD;
+  .sub-nav {
+    background-color: @subNavColor;
+  }
+  nav{
+    display: none !important;
+  }
+}
+
+#main {
+  margin: 20px auto 20px;
+  min-height: 340px;
+}
+
+
+.tk-spy-hidden {
+  display: block !important;
+  position: relative;
+  &.hidden {
+    display: none !important;
+  }
+}
+
+nav {
+  position: relative;
+  @subNavColor: #DDDDDD;
+  @vPadding: 4px;
+  @navColor: #AAA;
+  padding: @vPadding 8px;
+  text-align: right;
+  &.tk-spy {
+    width: 100%;
+    .box-sizing(border-box);
+  }
+  .nav-item {
+    margin: 0 4px;
+    opacity: .5;
+    &:hover {
+      text-decoration: none;
+      opacity: 1;
+    }
+  }
+  .nav-item-active {
+    position: relative;
+    cursor: default;
+    opacity: 1;
+    &:after {
+      position: absolute;
+      content: '';
+      bottom: @vPadding * -2;
+      left: 10px;
+      @arrowWidth: 12px;
+      .up-arrow(@back, @arrowWidth);
+    }
+    &.has-sub-nav {
+      &:after {
+        border-bottom-color: @subNavColor;
+      }
+    }
+  }
+  .sub-nav {
+    display: block;
+    background-color: @subNavColor;
+    white-space: nowrap;
+    .box-sizing(border-box);
+    .nav-item {
+    }
+    .nav-item-active {
+      &:after {
+        border-bottom-color: @back;
+      }
+    }
+  }
+}
+
+
+caption{
+  text-align: left;
+}
+
+/**
+  ```
+    <ul>
+      <li><a>menu01</a></li>
+      <li><a>menu02</a></li>
+    </ul>
+  ```
+ */
+.dropdown-list {
+  .no-style-list;
+  .box-shadow(1px 1px 2px; .4);
+  .border-radius(2px);
+  position: absolute;
+  margin: 5px 10px;
+  right: 0;
+  li {
+    padding: 0;
+    margin: 0;
+  }
+  a {
+    display: inline-block;
+    .padding-box();
+    &:hover {
+
+    }
+  }
+}
+
+.no-style-submit {
+  background: transparent;
+  border: none;
+}
+
+.upload-form {
+  @back: @white;
+  background: @back;
+  border: 1px solid darken(@back, 20);
+  position: relative;
+  padding: 0;
+  margin: 0 20px 20px;
+  .square(200px);
+  text-align: center;
+  color: lighten(@black, 20);
+  .box-shadow(2px 2px 4px, 0.4, inset);
+  font-size: 2em;
+  font-weight: bold;
+  &:hover {
+    font-style: italic;
+  }
+  &.loading {
+    opacity: 0.8;
+  }
+  [type="file"] {
+    opacity: 0;
+  }
+}
+
+.input-err-msg {
+  display: block;
+}
+
+[data-mode="edit"] {
+  .edit-btn {
+    display: none !important;
+  }
+  .detail-link {
+    display: none !important;
+  }
+}
+
+[data-mode="view"] {
+  [type="submit"] {
+    display: none !important;
+  }
+  select{
+    .no-style-select();
+    .pointer-events(none);
+  }
+}
+
+.tk-dialog-inner,
+.tk-confirm-dialog-inner {
+  .box-shadow(none);
+}
+
+.tk-dialog,
+.tk-confirm-dialog {
+  .dialog;
+  padding-top: 80px;
+}
+
+.selectable-list {
+  li {
+    &:after {
+      .ion;
+      content:"\f10a";
+      float: right;
+      line-height: 25px;
+      opacity: .15;
+    }
+    &:hover{
+      background-color: darken(@back,5);
+      &:after{
+        opacity: 1;
+      }
+    }
+    &:active{
+      background-color: darken(@back,40);
+      color:@white;
+    }
+    &.selected-list-item,
+    &.selected-list-item:hover,
+    &.selected-list-item:active{
+      background-color: darken(@back,40);
+      color:@white;
+      &:after{
+        opacity: 1;
+      }
+    }
+  }
+  .edit-btn, .destroy-btn {
+    .hidden;
+  }
+}
+.margin-link{
+  margin-right: 8px;
+}
+.no-margin{
+  margin:0 !important;
+}
+ul{
+  margin-top:0;
+}
+.search-form{
+  @margin:-2px;
+  margin-bottom: @margin;
+  .caption{
+    .padding-box();
+    line-height: 1em;
+    position: relative;
+    top:@margin;
+  }
+}
+.caption,caption{
+  color:#AAA;
+}
+.y-scrollable{
+  overflow-y: auto;
+  width:100%;
+  min-height: 200px;
+}
+
+@import "media";

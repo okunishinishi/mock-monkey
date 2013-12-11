@@ -1,0 +1,94 @@
+//<h1>tek-doc.less-0.2.28</h1>
+//stylesheet for styledocco preview
+@import "tek-mixin";
+
+
+body {
+  padding: 20px;
+}
+.box{
+  width:80px;
+  height:80px;
+  background-color: #AAA;
+}
+.rotate45{
+  .rotate(45deg);
+}
+.skew30{
+  .skew(30deg);
+}
+.colored-box {
+  .border-radius(2px);
+  .box-shadow(1px 1px 2px; 0.5; inset);
+  display: inline-block;
+  padding: 4px 8px;
+  width: 80px;
+  margin: 5px 5px;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  .colored-box("white");
+  .colored-box("silver");
+  .colored-box("black");
+  .colored-box("gray");
+  .colored-box("red");
+  .colored-box("pink");
+  .colored-box("yellow");
+  .colored-box("orange");
+  .colored-box("brown");
+  .colored-box("green");
+  .colored-box("blue");
+  .colored-box("purple");
+  .colored-box("cyan");
+}
+
+//noinspection ALL
+.colored-box(@color) {
+  @name: ~`@{color}`;
+  &.color-@{name} {
+    background-color: @@color;
+    color: darken(@@color, 20%);
+  }
+}
+
+p {
+  padding: 10px 20px;
+}
+
+.gradient-box {
+  height: 80px;
+  .border-radius(2px);
+}
+
+.radial-gradient-box {
+  width: 200px;
+  height: 200px;
+}
+
+.blue-gradient {
+  .linear-gradient(@blue, darken(@blue, 30));
+  border: 1px solid darken(@blue, 1);
+}
+
+.green-radial-gradient {
+  .radial-gradient(20%, 40%, @green, darken(@green, 50));
+}
+
+.stripe-box{
+  height: 200px;
+}
+.orange-stripe {
+  background-color: @orange;
+  .stripe(40px, lighten(@orange, 20));
+}
+.red-balloon{
+  .balloon(@red);
+}
+.green-balloon{
+  .balloon(@green);
+}
+.blue-balloon{
+  .balloon(@blue);
+}
+.yellow-balloon{
+  .balloon(@yellow);
+}

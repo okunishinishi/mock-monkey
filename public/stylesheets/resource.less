@@ -1,0 +1,76 @@
+@import "lib/tek-mixin";
+@import "base/colors";
+@import "base/mixins";
+
+@aside:260px;
+#main{
+  padding-left: @aside;
+  position: relative;
+}
+aside{
+  position: absolute;
+  left: 0;
+  top:0;
+  width:@aside;
+  .padding-box();
+  &.animatable{
+    .transition(width 500ms;);
+  }
+}
+article{
+  .padding-box();
+  margin: 0 20px;
+}
+
+col:nth-child(1){
+  width:80px;
+}
+
+.empty-section{
+  form{
+    display: none !important;
+  }
+}
+
+.resource-list-item{
+  .url-label{
+    margin-left:20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    color:lighten(@gray, 20);
+    font-size:.75em;
+  }
+  &.selected-list-item{
+    .url-label{
+      color:darken(@white, 10);
+    }
+  }
+}
+.data-input-row{
+  min-height: 200px;
+  .tk-editable-label,
+  textarea{
+    min-height: 300px;
+  }
+  .tk-editable-label{
+    white-space: pre;
+  }
+}
+
+#url-input-div{
+  @prefix:160px;
+  padding-left: @prefix;
+  min-height: 24px;
+  #url-input-prefix-span{
+    position: absolute;
+    left: 0;
+    color:lighten(@gray,20);
+    line-height: 1em;
+    top:4px;
+    display: inline-block;
+  }
+}
+[data-mode="edit"]{
+  #url-input-link{display: none !important;}
+}

@@ -1,0 +1,300 @@
+//<h1>tek-style-flat-0.3.10</h1>
+@import "tek-mixin";
+@import "tek-style.less";
+
+
+@back: #FEFEFE;
+@color: #606060;
+@link: #294c95;
+@border: lighten(@color, 35);
+@err: #EB7171;
+@info: #a37aeb;
+@warn: #ebd982;
+@outline:#A0F0FF;
+
+
+
+body {
+  background-color: @back;
+  color: @color;
+  padding-top: 8px;
+  .checkbox-radio-style(darken(@back,5), @color);
+  [type="radio"], [type="checkbox"]{
+    label{
+      &:before{
+        border:1px solid darken(@back, 20);
+      }
+    }
+  }
+}
+
+.full-width {
+  width: 100%;
+  .box-sizing(border-box);
+}
+
+header {
+  position: fixed;
+  .full-width;
+  background-color: fadeout(@back, 10);
+  left: 0;
+  top: 0;
+  border-bottom: 1px solid darken(@back, 10);
+  padding: 4px 20px;
+  z-index: 99;
+  .logo{
+    opacity: .75;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  a {
+    color: @color;
+  }
+}
+
+nav {
+}
+
+.nav-item {
+  padding: 0 5px;
+}
+
+.logo {
+
+}
+
+a {
+  .a(@link);
+}
+
+article {
+  padding: 20px 4px;
+}
+
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  .text-center;
+  color: @color;
+  .border-radius(4px);
+  padding: 2px 4px;
+  margin: 8px 0;
+  border: 1px solid @color;
+  background-color: @back;
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #EEE;
+  }
+  &:active {
+    background-color: #999;
+    color: @white;
+  }
+}
+
+input,select,a{
+  outline-color: @outline;
+}
+
+table {
+  border-collapse: collapse;
+  th, td {
+    border: 1px solid @border;
+    padding: 5px 10px;
+    &:first-child {
+      border-left: none;
+    }
+    &:last-child {
+      border-right: none;
+    }
+  }
+  thead {
+    th {
+      border-top: none;
+    }
+  }
+}
+
+.editable-list {
+  border-top: 1px solid @border;
+  li {
+    list-style: none;
+    border-top: 1px solid @border;
+    position: relative;
+    padding: 4px 8px;
+    .stick-top {
+      top: 4px;
+    }
+    .cover {
+      width: 80%;
+    }
+  }
+  border-bottom: 1px solid @border;
+  padding: 0;
+}
+
+.tab {
+  background-color: @back;
+  border: 1px solid @border;
+  border-bottom: none;
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 0 -.5px;
+  position: relative;
+  z-index: 1;
+  opacity: .5;
+  &:first-child {
+    margin-left: 8px;
+  }
+  &:hover {
+    opacity: .8;
+  }
+}
+
+.tab-active,
+.tab-active:hover,
+.tab-active:active {
+  z-index: 3;
+  opacity: 1;
+}
+
+.tab-content {
+  position: relative;
+  border-width:1px 0;
+  border-style: solid;
+  border-color:@border transparent;
+  padding: 10px 8px;
+  z-index: 2;
+  background-color: @back;
+}
+
+/******************
+ btn
+*******************/
+.ion-btn(@content) {
+  &:before {
+    .ion;
+    content: @content;
+    vertical-align: baseline;
+    margin: 0 2px;
+  }
+}
+
+.edit-btn {
+  .ion-btn("\f12c");
+}
+
+.destroy-btn {
+  .ion-btn("\f252");
+}
+
+.setting-btn {
+  .ion-btn("\f2ba");
+}
+
+.account-btn {
+  .ion-btn("\f213");
+}
+
+.search-btn {
+  .ion-btn("\f21f");
+}
+
+.signin-btn {
+  .ion-btn("\f29e");
+}
+
+.signout-btn {
+  .ion-btn("\f29f");
+}
+
+.email-btn {
+  .ion-btn("\f132");
+}
+
+.archive-btn {
+  .ion-btn("\f102");
+}
+.refresh-btn{
+  .ion-btn("\f21c");
+}
+.close-btn{
+  .ion-btn("\f129");
+  color:darken(@back, 30);
+}
+.mypage-btn{
+  .ion-btn("\f127");
+}
+.star-btn{
+  .ion-btn("\f24e");
+}
+.admin-btn{
+  .ion-btn("\f2ad");
+}
+.setting-btn{
+  .ion-btn("\f13d");
+}
+
+/******************
+ err
+*******************/
+.err-input {
+  &[type='text'],
+  &[type='url'],
+  &[type='search'],
+  &[type='tel'],
+  &[type='password'] {
+    border: 1px solid @err;
+    outline-color: @err;
+  }
+}
+
+.err-msg {
+  color: @err;
+}
+
+/******************
+ alert
+*******************/
+.alert(@color) {
+  padding: 4px 8px;
+  .border-radius(4px);
+  border: 1px solid @color;
+  color: darken(@color, 10);
+  margin: 4px 0;
+  background-color: @white;
+  .close-btn{
+    color:darken(@color, 10);
+    opacity: .25;
+    position: relative;
+    padding: 1px 0;
+    font-weight: bolder;
+    &:hover{
+      text-decoration: none;
+      opacity: 1;
+    }
+  }
+}
+
+.err-alert {
+  .alert(@err);
+}
+
+.warn-alert {
+  .alert(@warn);
+}
+
+.info-alert {
+  .alert(@info);
+}
+
+
+/****************
+  dialog
+ ****************/
+.dialog{
+  background-color: rgba(228, 228, 228, 0.9);
+}
+
+

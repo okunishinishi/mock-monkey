@@ -1,0 +1,77 @@
+mixin charset(content)
+    meta(charset=content)
+mixin view-port(content)
+    meta(name="viewport", content=content)
+mixin title(title)
+    title=title
+mixin favicon(favicon)
+    link(rel='shortcut icon', href=url(favicon))
+mixin touch-icon(favicon)
+    link(rel="apple-touch-icon", href=url(favicon))
+mixin css(href)
+    link(rel='stylesheet', href=url.css(href))
+mixin js(src)
+    script(src=url.js(src), type='text/javascript')
+mixin alert(data, key)
+    .alert(style="display:#{data&&data.length?'block':'none'};",id=key, class=key)
+        span.alert-msg=data
+        +empty-link().close-btn.alert-close-btn.float-right
+
+mixin submit-btn(label)
+    button.wide-btn.btn(type='submit',attributes)=label
+
+mixin reset-btn(label)
+    button.wide-btn.btn(type='reset',attributes)=label
+
+mixin edit-btn()
+    +empty-link(l.edit)(attributes).edit-btn
+
+mixin destroy-btn()
+    +empty-link(l.destroy)(attributes).destroy-btn
+
+mixin new-btn()
+    +empty-link(l.new)(attributes).wide-btn.new-btn.btn
+
+mixin close-btn()
+    +empty-link()(attributes).close-btn
+
+mixin input(type, name, data)
+    input(type=type, name=name, value=data && data[name],attributes)
+mixin text(name, data)
+    +input('text', name, data)(attributes)
+mixin hidden(name, data)
+    +input('hidden', name, data)(attributes)
+mixin password(name, data)
+    +input('password', name, data)(attributes)
+mixin search(name, data)
+    +input('search', name, data)(results, attributes)
+mixin reset(name, data)
+    +input('reset', name, data)(results, attributes)
+
+mixin label(for_id)
+    label(for=for_id)
+        block
+
+mixin empty-link(text)
+    a(href='javascript:void(0)',attributes)!=text
+
+
+mixin get-form()
+    form.search-form(method='get', attributes)
+        block
+
+mixin post-form()
+    form(method='post', attributes)
+        block
+
+mixin search-form()
+    +get-form().search-form(attributes)
+        block
+
+mixin destroy-form()
+    +post-form().destroy-form(attributes)
+        block
+
+mixin detail-form()
+    +post-form().detail-form(attributes)
+        block

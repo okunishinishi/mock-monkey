@@ -1,0 +1,19 @@
+<li class="hoverable positioned" id="user-list-item-{{_id}}">
+    <form class="inline-form" action="{{ctx}}/api/user/save"
+          method="post" name="edit-form">
+        <input type="hidden" value="{{_id}}" name="_id"/>
+        <input type="hidden" value="{{_vr}}" name="_vr"/>
+        <input type="hidden" value="{{_num}}" name="_num"/>
+        <input type="text" class="editable-text" name="username" value="{{username}}"/>
+        <label class="tk-editable-label"></label>
+    </form>
+    <div class="stick-right stick-top hoverable-child">
+        <a class="edit-btn" href="javascript:void(0)"></a>
+
+        <form class="inline-form" action="{{ctx}}/api/user/destroy"
+              method="post" name="destroy-form">
+            <input type="hidden" value="{{_id}}" name="_id"/>
+            <a href="javascript:void(0)" class='destroy-btn'></a>
+        </form>
+    </div>
+</li>

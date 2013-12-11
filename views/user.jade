@@ -1,0 +1,100 @@
+extends layout
+
+mixin user-search-form
+    +search-form(action=url('/api/user.json'), attributes)
+        h3.caption.float-left.no-margin=capitalize(pluralize(l.user))
+        +search('search_word', {}).float-right
+        +hidden('limit')(value=1000)
+        +hidden('skip')(value=0)
+        br.clear
+
+mixin user-password-change-form()
+    form(action=url('/api/user/change_password'), method='post', attributes)
+        h2
+        +hidden('_id')
+        table.wide-table
+            tbody: each name in 'password,password_again'.split(',')
+                tr
+                    th: +label('user-' + name + '-input')=l[name]
+                    td: +password(name, data)(id='user-' + name + '-input')
+
+        +submit-btn(l.save)
+
+mixin user-destroy-form
+    +destroy-form(action=url('/api/user/destroy'), attributes).invisible-form
+        +hidden('_id')
+
+mixin user-detail-form
+    +detail-form(action=url('/api/user/save'), attributes)
+        +hidden('_id')
+        table.wide-table
+            colgroup
+                col
+                col
+            caption.hoverable
+                span=capitalize(l.profile)
+                .float-right.hoverable-child
+                    +edit-btn().margin-link
+                    +destroy-btn()#user-destroy-btn
+                br.clear
+            tbody
+                each name in 'username,email'.split(',')
+                    tr
+                        th: +label('user-' + name + '-input')=l[name]
+                        td: +text(name, data)(id='user-' + name + '-input').wide-input
+
+            tr.hoverable
+                th: +label=l.password
+                td
+                    span=l.masked_password_value
+                    +empty-link(l.change).float-right.small.hoverable-child#user-password-change-btn
+            tr
+                th: +label=l.role
+                td
+                    select#user-role-select(name='role')
+                        option(value='')
+                        each role in roles
+                            option(value=role)=role
+
+
+        +submit-btn(l.save)
+        +reset-btn(l.reset).hidden
+        br
+        br
+
+        table.wide-table
+            colgroup
+                col
+                col
+            caption=capitalize(l.activity)
+            tbody
+                tr
+                    th: +label=l.signin_count
+                    td: span#signin_count-value
+                tr
+                    th: +label=l.last_signin
+                    td: span#last_signin-value
+
+
+
+
+block stylesheets
+    +css('user.css')
+
+block javascripts
+    +js('validation/v.user.js')
+    +js('p.user.js')
+
+block content
+    aside.wide-aside
+        section#user-list-section
+            +user-search-form#user-search-form
+            .y-scrollable
+                ul#user-list.editable-list
+            +new-btn#new-user-btn
+
+    article
+        section#user-detail-section(data-ref=url('/api/user/:_id'))
+            +user-destroy-form#user-destroy-form
+            +user-detail-form#user-detail-form
+            +user-password-change-form#user-password-change-form

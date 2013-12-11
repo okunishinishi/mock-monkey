@@ -1,0 +1,50 @@
+@import "lib/tek-mixin";
+@import "base/colors";
+@import "base/mixins";
+@import "base/fonts";
+
+
+header{
+  display: none !important;
+}
+#large-logo {
+  margin: 0;
+  font-size: 4em;
+  .etched(0.5);
+  .font-poiretone-regular;
+}
+
+#main{
+  max-width: 960px;
+}
+
+.sign-form {
+  position: relative;
+  display: inline-block;
+  width:320px;
+}
+
+#sign-section{
+  margin:20px 40px;
+}
+
+.btn-area {
+  margin-top: 10px;
+}
+
+#captcha-img {
+  height: 120px;
+}
+.caption{
+  color:lighten(@gray, 20);
+  margin: 5px 0 10px;
+}
+.wide-input{
+  width:100%;
+  .box-sizing(border-box);
+}
+
+#captcha-refresh-btn{
+  position: relative;
+  top: -10px;
+}

@@ -1,0 +1,6 @@
+{
+    "publicDir": "some_public_dir",
+    "jsDir": "some_public_dir/javascripts",
+    "imgDir": "some_public_dir/images",
+    "cssDir": "some_public_dir/stylesheets"
+}
