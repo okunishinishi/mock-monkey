@@ -3,8 +3,7 @@ var should = require('should'),
 
 exports.indexTest = function (test) {
     index(null, {
-        render: function (view) {
-            view.should.equal('index.jade');
+        redirect: function () {
             test.done();
         }
     });
