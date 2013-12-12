@@ -27,6 +27,7 @@ exports.fontDir = resolve(publicDir, 'fonts');
 exports.fontStylesheet = resolve(exports.cssDir, 'base/fonts.less');
 exports.hbsDir = resolve(publicDir, 'hbs');
 exports.hbsTemplateFile = resolve(exports.jsDir, "templates.js");
+exports.resourceDir = resolve(publicDir, 'resource');
 
 exports.libJsNames = [
     'jquery.js',

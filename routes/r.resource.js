@@ -1,10 +1,18 @@
 var tek = require('tek'),
     copy = tek.meta.copy,
+    path = require('path'),
+    resolve = path.resolve,
+    relative = path.relative,
     db = require('../db'),
     v = require('./validations'),
+    config = require('../app.config'),
+    fs = require('fs'),
     Resource = db.models['Resource'];
 
 var search_fields = ['name'];
+
+var resourceDir = config.resourceDir,
+    publicDir = config.publicDir;
 
 exports.index = function (req, res) {
     res.render("resource.jade", {
@@ -42,9 +50,20 @@ exports.api = {
                                 return;
                             }
                             copy.fallback(old, resource);
-                            resource.update(function (resource) {
-                                res.json({
-                                    resource: resource
+                            var data = resource.data,
+                                filepath = resolve(resourceDir, [resource._id.toString(), resource.type || 'dat'].join('.'));
+                            resource.data_path = '/' + relative(publicDir, filepath);
+                            delete resource.data; //dataは巨大になるのでDBには入れない
+                            fs.writeFile(filepath, data, function (err) {
+                                if (err) {
+                                    res.json({err: err});
+                                    return;
+                                }
+                                resource.data = data;
+                                resource.update(function (resource) {
+                                    res.json({
+                                        resource: resource
+                                    });
                                 });
                             });
                         });
@@ -88,7 +107,16 @@ exports.api = {
         var p = req.params,
             _id = p && p._id;
         Resource.findById(_id, function (resource) {
-            res.json(resource);
+            if (resource.data_path) {
+                var data_filepath = resolve(publicDir + resource.data_path);
+                fs.readFile(data_filepath, function (err, buffer) {
+                    if (err) console.error(err);
+                    resource.data = buffer && buffer.toString();
+                    res.json(resource);
+                });
+            } else {
+                res.json(resource);
+            }
         });
     },
     list: function (req, res) {

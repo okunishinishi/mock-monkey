@@ -37,7 +37,6 @@ exports.ResourceUpdateSchema.URL = ServerSide.extend({}, {
                 err = null;
                 break;
         }
-        console.log(value);
         callback(err);
     }
 });

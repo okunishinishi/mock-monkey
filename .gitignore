@@ -22,4 +22,5 @@ node_modules
 test/work/*
 test/data/json/*.json
 public/uploaded/*
+public/resource/*
 backup/db/*

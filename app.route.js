@@ -59,3 +59,7 @@ post('/api/resource/save', resource.api.save);
 post('/api/resource/destroy', resource.api.destroy);
 get('/api/resource.json', resource.api.list);
 get('/api/resource/:_id', resource.api.one);
+
+
+var mock = r['mock'];
+all('/mock/*', mock);
