@@ -30,7 +30,6 @@ exports = module.exports = function (req, res) {
                 } else {
                     [req.body, req.query].forEach(function (data) {
                         if (!data) return;
-                        console.log('data', data);
                         buffer = exports.render(buffer, data);
                     });
                     res.setHeader("Content-Type", "text/" + resourceType);
