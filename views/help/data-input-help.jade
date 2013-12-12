@@ -1,0 +1,20 @@
+#data-input-help-div.hidden
+    table.wide-table
+        tbody
+            tr
+                th request
+                td http://localhost:3071/mock/mypath?name=Okunishi
+            tr
+                th json
+                td.
+                   { name:"${my_name}", age:28 }
+                   <span class="change-arrow"> => </span>
+                   { name:"Okunishi", age:28 }
+            tr
+                th xml
+                td.
+                    &lt;name&gt;${my_name}&lt;/name&gt;
+                    <span class="change-arrow"> => </span>
+                    &lt;name&gt;Okunishi&lt;/name&gt;
+
+

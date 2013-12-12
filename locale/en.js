@@ -43,6 +43,7 @@ l.resource = 'resource';
 l.try_it = 'try it >>';
 l.regex = 'RegExp';
 l.string = 'String';
+l.dyname_injection_example = 'dynamic injection example';
 
 l.placeholder = {};
 l.placeholder.name = 'your resource name';

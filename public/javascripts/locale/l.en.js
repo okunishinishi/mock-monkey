@@ -43,6 +43,7 @@ l = {
     "try_it": "try it >>",
     "regex": "RegExp",
     "string": "String",
+    "dyname_injection_example": "dynamic injection example",
     "placeholder": {
         "name": "your resource name",
         "url": "your api url",

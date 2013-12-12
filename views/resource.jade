@@ -52,6 +52,11 @@ mixin resource-detail-form
                     td
                         div#data-input-div
                             textarea(name='data').wide-textarea
+                        small.float-right
+                            a#dyname_injection_example-link(href="javascript:$('#data-input-help-div').toggleClass('hidden')")=l.dyname_injection_example
+                        br.clear
+                        include ./help/data-input-help
+
         +submit-btn(l.save)
         +reset-btn(l.reset).hidden
 
