@@ -43,8 +43,9 @@ mixin resource-detail-form
                 tr
                     th: +label('resource-type-input')=l.type
                     td
-                        span=l.xml
-                        input(type='hidden', name='type', value='xml')
+                        select(name='type')
+                            each val in 'xml,json'.split(',')
+                                option(value=val, selected=data&&data.type==val)=l[val]
 
                 tr.data-input-row
                     th: +label('resource-data-input')=l.data

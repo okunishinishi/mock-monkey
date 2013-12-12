@@ -86,7 +86,7 @@ var databases = {
     }
 };
 
-exports.db = databases['mongo'];
+exports.db = databases['sqlite'];
 
 exports.backup = {
     interval: 24 * 60 * 60 * 1000,
