@@ -40,29 +40,40 @@ exports.api = {
                         res.json({err: err});
                         return;
                     }
-                    Resource.findById(_id, function (old) {
-                        var resource = new Resource(data),
-                            diff = resource.diff(old);
-                        var schema = new v.resource.ResourceUpdateSchema.Newer;
-                        schema.validate(diff.newer(), function (err) {
-                            if (err) {
-                                res.json({err: err});
-                                return;
-                            }
-                            copy.fallback(old, resource);
-                            var data = resource.data,
-                                filepath = resolve(resourceDir, [resource._id.toString(), resource.type || 'dat'].join('.'));
-                            resource.data_path = '/' + relative(publicDir, filepath);
-                            delete resource.data; //dataは巨大になるのでDBには入れない
-                            fs.writeFile(filepath, data, function (err) {
+                    new v.resource.ResourceUpdateSchema.Data().validate({
+                        'type,data': {
+                            type: data.type,
+                            data: data.data
+                        }
+                    }, function (err) {
+                        if (err) {
+                            res.json({err: err});
+                            return;
+                        }
+                        Resource.findById(_id, function (old) {
+                            var resource = new Resource(data),
+                                diff = resource.diff(old);
+                            var schema = new v.resource.ResourceUpdateSchema.Newer;
+                            schema.validate(diff.newer(), function (err) {
                                 if (err) {
                                     res.json({err: err});
                                     return;
                                 }
-                                resource.data = data;
-                                resource.update(function (resource) {
-                                    res.json({
-                                        resource: resource
+                                copy.fallback(old, resource);
+                                var data = resource.data,
+                                    filepath = resolve(resourceDir, [resource._id.toString(), resource.type || 'dat'].join('.'));
+                                resource.data_path = '/' + relative(publicDir, filepath);
+                                delete resource.data; //dataは巨大になるのでDBには入れない
+                                fs.writeFile(filepath, data, function (err) {
+                                    if (err) {
+                                        res.json({err: err});
+                                        return;
+                                    }
+                                    resource.data = data;
+                                    resource.update(function (resource) {
+                                        res.json({
+                                            resource: resource
+                                        });
                                     });
                                 });
                             });

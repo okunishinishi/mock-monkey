@@ -11,7 +11,31 @@ exports.ResourceInsertSchema = ServerSide.extend(clientside.insert, {
 
 exports.ResourceUpdateSchema = ServerSide.extend(clientside.update, {
 });
-
+exports.ResourceUpdateSchema.Data = ServerSide.extend({}, {
+    "type,data": function (value, callback) {
+        var s = this, err;
+        var data = value.data;
+        if (!data) {
+            callback(null);
+            return;
+        }
+        switch (value.type) {
+            case 'json':
+                try{
+                    JSON.parse(data);
+                    break;
+                } catch(e){
+                    err = new Err({
+                        cause: 'invalid_json',
+                        expect: '',
+                        actual: String(e)
+                    });
+                }
+                break;
+        }
+        callback(err);
+    }
+});
 exports.ResourceUpdateSchema.URL = ServerSide.extend({}, {
     "url,url_kind": function (value, callback) {
         var s = this, err;

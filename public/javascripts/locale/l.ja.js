@@ -69,7 +69,9 @@ l = {
         "page_forbidden": "Sorry! You are not authorized.",
         "update_conflict": "Conflict detected. Please reload page and retry it.",
         "illegal_sign": "Illegal sign.",
-        "invalid_regexp": "invalid regular expression"
+        "invalid_regexp": "invalid regular expression",
+        "invalid_json": "invalid json",
+        "invalid_xml": "invalid xml"
     },
     "btn": {},
     "lbl": {},

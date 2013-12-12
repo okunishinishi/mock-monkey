@@ -72,3 +72,5 @@ l.err.page_forbidden = 'Sorry! You are not authorized.';
 l.err.update_conflict = 'Conflict detected. Please reload page and retry it.';
 l.err.illegal_sign = 'Illegal sign.';
 l.err.invalid_regexp = 'invalid regular expression';
+l.err.invalid_json = 'invalid json';
+l.err.invalid_xml = 'invalid xml';
