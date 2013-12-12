@@ -24,27 +24,33 @@ exports = module.exports = function (req, res) {
             fs.readFile(resourceFilePath, function (err, buffer) {
                 if (err) {
                     console.error(err);
-                    res.redirect('/503');
+                    res.status('503');
+                    res.render('err/503');
                 } else {
+                    [req.body, req.query].forEach(function (data) {
+                        if (!data) return;
+                        console.log('data', data);
+                        buffer = exports.render(buffer, data);
+                    });
                     res.setHeader("Content-Type", "text/" + resourceType);
                     res.send(buffer);
                 }
             });
         } else {
-            res.redirect('/404');
+            res.status('404');
+            res.render('err/404');
         }
     });
 };
 
 exports.getRequestedResourcePath = function (req) {
-    return url.resolve('/', req.path.replace('/mock', ''));
+    return url.resolve('/', req.originalUrl.replace('/mock', ''));
 
 };
 
 exports.getURLPattern = function (kind, pattern) {
     switch (kind) {
         case 'regex':
-            console.log(pattern.match(/^\\\//), pattern);
             if (!pattern.match(/^\\\//)) {
                 //TODO
             }
@@ -52,4 +58,10 @@ exports.getURLPattern = function (kind, pattern) {
             break;
     }
     return url.resolve('/', pattern);
+};
+
+exports.render = function (buffer, data) {
+    return buffer.toString().replace(/(\${)(.*?)(})/g, function ($0, $1, $2) {
+        return data && data[$2] || $0;
+    });
 };
