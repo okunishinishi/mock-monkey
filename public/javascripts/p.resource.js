@@ -9,7 +9,7 @@
  */
 (function ($, l, hbs) {
 
-    RegExp.escape = function(string) {
+    RegExp.escape = function (string) {
         return string && string.replace(/[$-\/?[-^{|}]/g, '\\$&');
     };
 
@@ -86,7 +86,17 @@
                 schema: v.resource.update,
                 editBtn: ".edit-btn"
             }, function (data) {
-                form.setDetailFormValue(data.resource);
+                var resource = data.resource || {};
+
+                switch (resource.type) {
+                    case 'xml':
+                        resource.data = vkbeautify.xml(resource.data || '');
+                        break;
+                    case 'json':
+                        resource.data = vkbeautify.json(resource.data);
+                        break;
+                }
+                form.setDetailFormValue(resource);
                 callback && callback();
             });
             form.setDetailFormValue = function (data) {
@@ -103,7 +113,7 @@
         resourceDetailSection: function (options) {
             var section = $(this).show(),
                 destroyForm = $('#resource-destroy-form', section),
-                detailForm = $('#resource-detail-form', section).resourceDetailForm(function(){
+                detailForm = $('#resource-detail-form', section).resourceDetailForm(function () {
                     urlInputDiv.update();
                     section.layout();
                 });
@@ -169,23 +179,23 @@
                 urlPrefixSpan = $('#url-input-prefix-span', urlInputDiv);
 
 
-            function injectMockExp(regExpString){
+            function injectMockExp(regExpString) {
                 return regExpString && regExpString.replace(/\\\//g, '/').replace(/\\d/g, '0')
-                    .replace(/\\{.*?\\}/g,'')
-                    .replace(/{.*?}/g,'')
+                    .replace(/\\{.*?\\}/g, '')
+                    .replace(/{.*?}/g, '')
                     .replace(/[\+\*]/g, '')
                     .replace(/\\\\/g, '');
             }
 
             urlInputDiv.update = function () {
-                if(!urlKindInput.filter(':checked').size()){
+                if (!urlKindInput.filter(':checked').size()) {
                     urlKindInput.first().attr('checked', true);
                 }
 
                 var urlPrefix = location.origin + "/mock/";
                 var kind = urlKindInput.filter(':checked').val(),
                     urlValue = urlInput.val();
-                switch(kind){
+                switch (kind) {
                     case 'regex':
                         urlPrefix = RegExp.escape(urlPrefix);
                         urlValue = injectMockExp(urlValue);
@@ -205,13 +215,10 @@
             };
 
 
-
-            urlKindInput.change(function(){
+            urlKindInput.change(function () {
                 urlInputDiv.update();
                 section.layout();
             });
-
-
 
 
             section.layout();
@@ -233,7 +240,7 @@
                     aside.addClass('wide-aside');
                 },
                 destroy: function (_id) {
-                    $.pushQueryToState({_id: '', t:new Date().getTime()});
+                    $.pushQueryToState({_id: '', t: new Date().getTime()});
                     listSection.find('#resource-list-item-' + _id).remove();
                 }
             });
@@ -242,7 +249,7 @@
         aside
             .toggleClass('wide-aside', !_id);
         listSection.resourceListSection(_id, function (_id) {
-            $.pushQueryToState({_id: _id, t:new Date().getTime()});
+            $.pushQueryToState({_id: _id, t: new Date().getTime()});
             detailSection.load(_id);
             aside
                 .addClass('animatable')
