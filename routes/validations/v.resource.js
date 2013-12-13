@@ -21,12 +21,24 @@ exports.ResourceUpdateSchema.Data = ServerSide.extend({}, {
         }
         switch (value.type) {
             case 'xml':
+                var XMLParser = require('xmldom').DOMParser;
+                new XMLParser({
+                    errorHandler: {
+                        error: function (e) {
+                            err = new Err({
+                                cause: 'invalid_xml',
+                                expect: '',
+                                actual: String(e)
+                            });
+                        }
+                    }
+                }).parseFromString(data);
                 break;
             case 'json':
-                try{
+                try {
                     JSON.parse(data);
                     break;
-                } catch(e){
+                } catch (e) {
                     err = new Err({
                         cause: 'invalid_json',
                         expect: '',
