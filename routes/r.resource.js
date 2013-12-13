@@ -69,8 +69,8 @@ exports.api = {
                                         res.json({err: err});
                                         return;
                                     }
-                                    resource.data = data;
                                     resource.update(function (resource) {
+                                        resource.data = data;
                                         res.json({
                                             resource: resource
                                         });

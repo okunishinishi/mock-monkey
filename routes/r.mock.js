@@ -13,8 +13,9 @@ exports = module.exports = function (req, res) {
             resourceType = 'text';
         resources.forEach(function (resource) {
             if (!resource.url) return;
+            if (resourceFilePath) return;
             var pattern = exports.getURLPattern(resource.url_kind, resource.url),
-                hit = !!requestedPath.match(pattern);
+                hit = requestedPath.indexOf(pattern) > -1;
             if (hit) {
                 resourceFilePath = path.resolve('/', config.publicDir + resource.data_path);
                 resourceType = resource.type || resourceType;
@@ -29,7 +30,6 @@ exports = module.exports = function (req, res) {
                 } else {
                     [req.body, req.query].forEach(function (data) {
                         if (!data) return;
-                        console.log('data', data);
                         buffer = exports.render(buffer, data);
                     });
                     res.setHeader("Content-Type", "text/" + resourceType);
@@ -57,6 +57,7 @@ exports.getURLPattern = function (kind, pattern) {
             return new RegExp(pattern);
             break;
     }
+    pattern = pattern.split('?').shift();
     return url.resolve('/', pattern);
 };
 

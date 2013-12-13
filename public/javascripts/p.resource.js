@@ -233,7 +233,7 @@
                     aside.addClass('wide-aside');
                 },
                 destroy: function (_id) {
-                    $.pushQueryToState({_id: ''});
+                    $.pushQueryToState({_id: '', t:new Date().getTime()});
                     listSection.find('#resource-list-item-' + _id).remove();
                 }
             });
@@ -242,7 +242,7 @@
         aside
             .toggleClass('wide-aside', !_id);
         listSection.resourceListSection(_id, function (_id) {
-            $.pushQueryToState({_id: _id});
+            $.pushQueryToState({_id: _id, t:new Date().getTime()});
             detailSection.load(_id);
             aside
                 .addClass('animatable')
