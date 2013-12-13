@@ -20,6 +20,8 @@ exports.ResourceUpdateSchema.Data = ServerSide.extend({}, {
             return;
         }
         switch (value.type) {
+            case 'xml':
+                break;
             case 'json':
                 try{
                     JSON.parse(data);
