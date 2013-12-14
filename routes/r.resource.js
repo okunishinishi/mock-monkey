@@ -105,8 +105,14 @@ exports.api = {
             }
             Resource.findById(data._id, function (resource) {
                 if (resource) {
-                    resource.remove(function () {
-                        res.json({count: 1});
+                    var data_filepath = resolve(publicDir + resource.data_path);
+                    fs.exists(data_filepath, function (exists) {
+                        if(exists){
+                            fs.unlinkSync(data_filepath);
+                        }
+                        resource.remove(function () {
+                            res.json({count: 1});
+                        });
                     });
                 } else {
                     res.json({count: 0});

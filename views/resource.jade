@@ -47,7 +47,7 @@ mixin resource-detail-form
                         select(name='type')
                             each val in 'xml,json'.split(',')
                                 option(value=val, selected=data&&data.type==val)=l[val]
-                tr
+                tr.hidden
                     th: +label('resource-delay-input')=l.delay
                     td
                         input(type='text', value=data&&data.delay || '0',name='delay')#resource-delay-input
