@@ -13,7 +13,10 @@ v.resource = (function (v) {
             _id: {
                 required: true
             },
-            delay:{
+            url: {
+                required: true
+            },
+            delay: {
             },
             name: {
                 required: true
