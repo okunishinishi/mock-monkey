@@ -10,7 +10,8 @@ exports = module.exports = function (req, res) {
 
         var requestedPath = exports.getRequestedResourcePath(req),
             resourceFilePath = null,
-            resourceType = 'text';
+            resourceType = 'text',
+            resourceDelaySeconds = 0;
         resources.forEach(function (resource) {
             if (!resource.url) return;
             if (resourceFilePath) return;
@@ -19,23 +20,28 @@ exports = module.exports = function (req, res) {
             if (hit) {
                 resourceFilePath = path.resolve('/', config.publicDir + resource.data_path);
                 resourceType = resource.type || resourceType;
+                resourceDelaySeconds = Number(resource.delay);
+                if (isNaN(resourceDelaySeconds)) resourceDelaySeconds = 0;
             }
         });
         if (resourceFilePath) {
-            fs.readFile(resourceFilePath, function (err, buffer) {
-                if (err) {
-                    console.error(err);
-                    res.status('503');
-                    res.render('err/503');
-                } else {
-                    [req.body, req.query].forEach(function (data) {
-                        if (!data) return;
-                        buffer = exports.render(buffer, data);
-                    });
-                    res.setHeader("Content-Type", "text/" + resourceType);
-                    res.send(buffer);
-                }
-            });
+            var delay = resourceDelaySeconds * 1000 || 1;
+            setTimeout(function () {
+                fs.readFile(resourceFilePath, function (err, buffer) {
+                    if (err) {
+                        console.error(err);
+                        res.status('503');
+                        res.render('err/503');
+                    } else {
+                        [req.body, req.query].forEach(function (data) {
+                            if (!data) return;
+                            buffer = exports.render(buffer, data);
+                        });
+                        res.setHeader("Content-Type", "text/" + resourceType);
+                        res.send(buffer);
+                    }
+                });
+            }, delay);
         } else {
             res.status('404');
             res.render('err/404');
