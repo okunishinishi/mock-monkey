@@ -2,12 +2,16 @@ mock-monkey
 ======
 Create your own mock API via browser.
 
-![capture](doc/img/capture_top.png "capture")
+Supported format:
+
++ XML
++ JSON
+
+![capture](doc/img/capture.png "capture")
 
 requirements
 ------
 + [Node.js](http://nodejs.org/)
-
 
 quick start
 ------
@@ -15,5 +19,7 @@ quick start
     npm install
     node app.js
 ```
+
+
 
 
