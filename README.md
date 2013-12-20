@@ -7,7 +7,6 @@ Create your own mock API via browser.
 requirements
 ------
 + [Node.js](http://nodejs.org/)
-+ [MongoDB](http://www.mongodb.org/)
 
 
 quick start
