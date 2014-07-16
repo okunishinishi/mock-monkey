@@ -24,6 +24,8 @@ exports.api = {
         var l = res.locals.l,
             data = req.body || {},
             _id = data._id;
+
+        data._lastUpdate = new Date().getTime();
         if (_id) {
             new v.resource.ResourceUpdateSchema().validate(data, function (err) {
                 if (err) {
@@ -107,7 +109,7 @@ exports.api = {
                 if (resource) {
                     var data_filepath = resolve(publicDir + resource.data_path);
                     fs.exists(data_filepath, function (exists) {
-                        if(exists){
+                        if (exists) {
                             fs.unlinkSync(data_filepath);
                         }
                         resource.remove(function () {
@@ -148,7 +150,10 @@ exports.api = {
             });
             condition = new db.AmbiguousCondition(condition);
         }
-        Resource.findByCondition(condition,function (models) {
+        Resource.findByCondition(condition, function (models) {
+            models = models.sort(function (a, b) {
+                return Number(b._lastUpdate) - Number(a._lastUpdate);
+            });
             res.json(models);
         }).limit(limit).skip(skip);
     }
